@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Rufustodolist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        secondary: ['Open Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            light: '#ff4d8d',
+                            DEFAULT: '#ff1a75',
+                            dark: '#cc145d'
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#262626',
+                            300: '#333333'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-100 dark:to-dark-200 transition-colors duration-200">
+    <nav class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg shadow-lg transition-all duration-200">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-xl font-medium text-primary">Rufustodolist</div>
+                <div class="flex items-center gap-4">
+                    <div class="relative" id="profileDropdown">
+                        <button class="flex items-center gap-2 p-2 rounded-xl bg-white/50 dark:bg-dark-300/50 text-gray-800 dark:text-white hover:bg-white/80 dark:hover:bg-dark-300/80 transition-all duration-200">
+                            <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                                <span class="text-primary text-sm font-medium" id="profileInitials"></span>
+                            </div>
+                            <span class="text-sm font-medium hidden md:block" id="profileEmail"></span>
+                        </button>
+                        <div class="hidden absolute right-0 top-full mt-2 w-48 bg-white dark:bg-dark-300 rounded-xl shadow-xl z-50">
+                            <div class="p-4 border-b border-gray-100 dark:border-dark-200">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Signed in as</p>
+                                <p class="text-sm font-medium text-gray-800 dark:text-white" id="dropdownEmail"></p>
+                            </div>
+                            <div class="p-2">
+                                <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors duration-200">
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="toggleTheme()" class="p-2 rounded-full bg-gray-200 dark:bg-dark-300 text-gray-800 dark:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="space-y-2">
+                            <span class="block w-6 h-0.5 bg-gray-600 dark:bg-gray-300"></span>
+                            <span class="block w-6 h-0.5 bg-gray-600 dark:bg-gray-300"></span>
+                            <span class="block w-6 h-0.5 bg-gray-600 dark:bg-gray-300"></span>
+                        </div>
+                    </button>
+                </div>
+                <ul class="hidden md:flex space-x-8" id="menu">
+                    <li><a href="dashboard.html" class="text-primary font-medium">Dashboard</a></li>
+                    <li><a href="home.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Todo List</a></li>
+                    <li><a href="cards.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Cards</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-4xl font-medium text-gray-800 dark:text-white mb-8">Welcome back, <span id="welcomeInitials" class="text-primary"></span></h1>
+            
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-purple-100/30 dark:bg-purple-900/10 backdrop-blur-sm rounded-3xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-medium text-gray-800 dark:text-white">Today's Tasks</h2>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Dec 13</span>
+                    </div>
+                    <ul id="dashboardTodoList" class="space-y-4">
+                    </ul>
+                    <a href="home.html" class="inline-block mt-6 px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                        View All Tasks
+                    </a>
+                </div>
+
+                <div class="bg-rose-100/30 dark:bg-rose-900/10 backdrop-blur-sm rounded-3xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-medium text-gray-800 dark:text-white mb-6">Quick Actions</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="home.html" class="flex flex-col items-center p-4 bg-white/50 dark:bg-dark-300/50 rounded-xl hover:bg-white/80 dark:hover:bg-dark-300/80 transition-all duration-200">
+                            <svg class="w-8 h-8 text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-100">Add Task</span>
+                        </a>
+                        <a href="home.html" class="flex flex-col items-center p-4 bg-white/50 dark:bg-dark-300/50 rounded-xl hover:bg-white/80 dark:hover:bg-dark-300/80 transition-all duration-200">
+                            <svg class="w-8 h-8 text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-100">Calendar</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-teal-100/30 dark:bg-teal-900/10 backdrop-blur-sm rounded-3xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-medium text-gray-800 dark:text-white mb-6">Statistics</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white/50 dark:bg-dark-300/50 rounded-xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Completed Tasks</span>
+                                <span class="text-lg font-medium text-primary">85%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-dark-300 rounded-full">
+                                <div class="h-2 bg-primary rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-white/50 dark:bg-dark-300/50 rounded-xl p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Upcoming Tasks</span>
+                                <span class="text-lg font-medium text-primary">4</span>
+                            </div>
+                        </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 

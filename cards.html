@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards - Rufustodolist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        secondary: ['Open Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            light: '#ff4d8d',
+                            DEFAULT: '#ff1a75',
+                            dark: '#cc145d'
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#262626',
+                            300: '#333333'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-200 dark:to-dark-100 transition-colors duration-200">
+    <nav class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg shadow-lg transition-all duration-200">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-xl font-medium text-primary">Rufustodolist</div>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleTheme()" class="p-2 rounded-full bg-gray-200 dark:bg-dark-300 text-gray-800 dark:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="space-y-2">
+                            <span class="block w-6 h-0.5 bg-gray-600 dark:bg-gray-300"></span>
+                            <span class="block w-6 h-0.5 bg-gray-600 dark:bg-gray-300"></span>
+                            <span class="block w-6 h-0.5 bg-gray-600 dark:bg-gray-300"></span>
+                        </div>
+                    </button>
+                </div>
+                <ul class="hidden md:flex space-x-8" id="menu">
+                    <li><a href="dashboard.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Dashboard</a></li>
+                    <li><a href="home.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors duration-200">Todo List</a></li>
+                    <li><a href="cards.html" class="text-primary font-medium">Cards</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-medium text-gray-800 dark:text-white mb-6">Cards Layout</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg rounded-2xl shadow-xl p-6 transition-all duration-200 transform hover:-translate-y-1">
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+            <div class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg rounded-2xl shadow-xl p-6 transition-all duration-200 transform hover:-translate-y-1">
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+            </div>
+            <div class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg rounded-2xl shadow-xl p-6 transition-all duration-200 transform hover:-translate-y-1 md:col-span-2 lg:col-span-1">
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        // On page load or when changing themes
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 

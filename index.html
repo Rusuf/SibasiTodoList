@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Rufustodolist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        secondary: ['Open Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            light: '#ff4d8d',
+                            DEFAULT: '#ff1a75',
+                            dark: '#cc145d'
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#262626',
+                            300: '#333333'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-200 dark:to-dark-100 transition-colors duration-200">
+    <nav class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg shadow-lg transition-all duration-200">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-xl font-medium text-primary">Rufustodolist</div>
+                <button onclick="toggleTheme()" class="p-2 rounded-full bg-gray-200 dark:bg-dark-300 text-gray-800 dark:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto px-4 py-8 max-w-md">
+        <div class="bg-white/80 dark:bg-dark-200/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 transition-all duration-200">
+            <h1 class="text-2xl font-medium text-gray-800 dark:text-white mb-6 text-center">Welcome to SiBtodolist</h1>
+            <form id="loginForm" class="space-y-4">
+                <div class="space-y-1">
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 bg-white/50 dark:bg-dark-300/50 border border-gray-200 dark:border-dark-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all duration-200" required>
+                    <span class="text-sm text-red-500 hidden" id="emailError"></span>
+                </div>
+                <div class="space-y-1">
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 bg-white/50 dark:bg-dark-300/50 border border-gray-200 dark:border-dark-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all duration-200" required>
+                    <span class="text-sm text-red-500 hidden" id="passwordError"></span>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white py-3 px-4 rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5" id="loginButton" disabled>Login</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 
